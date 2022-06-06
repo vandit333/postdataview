@@ -25,7 +25,7 @@ class _postdataviewState extends State<postdataview> {
     var response = await http.post(url);
     //string to json
     dynamic result=jsonDecode(response.body);
-
+    listdata.clear();
     result.forEach((element) {
       print(element);
       setState(() {
@@ -45,9 +45,20 @@ class _postdataviewState extends State<postdataview> {
     return Scaffold(appBar: AppBar(),
       body: ListView.builder(itemCount: listdata.length,itemBuilder: (context, index) {
         return ListTile(
-        title: Text("${listdata[index].id}"),
+        title: Text("${listdata[index].contact}"),
         subtitle: Text("${listdata[index].name}"),
-          trailing: Text("${listdata[index].contact}"),
+          trailing:Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+            IconButton(onPressed: () async {
+              var url = Uri.parse('https://vanditflutter.000webhostapp.com/delete.php?id=${listdata[index].id}');
+              var response = await http.get(url);
+              if(response.body=="data deleted")
+                {
+                  get();
+                }
+            }, icon: Icon(Icons.delete))
+          ]),
           
         );
       },),
