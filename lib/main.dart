@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:postdataview/adddata.dart';
 import 'database.dart';
 
 void main() {
@@ -57,11 +57,21 @@ class _postdataviewState extends State<postdataview> {
                 {
                   get();
                 }
-            }, icon: Icon(Icons.delete))
+            }, icon: Icon(Icons.delete)
+            ),
+                IconButton(onPressed: () {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+                    return postdemo("update",listdata[index],index,);
+                  },));
+                }, icon: Icon(Icons.update_disabled_outlined)),
           ]),
-          
         );
       },),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+          return postdemo("add");
+        },));
+      },child: Icon(Icons.add),),
     );
   }
 }
